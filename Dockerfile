@@ -15,8 +15,11 @@ RUN echo "NETWORKING=yes" > /etc/sysconfig/network
 # RUN service mysqld start
 # RUN systemctl start mysqld
 
-# install php
-RUN yum install -y php php-mysql php-devel php-gd php-pecl-memcache php-pspell php-snmp php-xmlrpc php-xml; yum clean all;
+# add repo to install php 5.5.X
+RUN rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
+
+# install php 5.5.X
+RUN yum --enablerepo=remi,remi-php55 install -y php php-mysql php-devel php-gd php-pecl-memcache php-pspell php-snmp php-xmlrpc php-xml; yum clean all;
 
 # install supervisord
 RUN yum install -y python-pip && pip install "pip>=1.4,<1.5" --upgrade; yum clean all;
